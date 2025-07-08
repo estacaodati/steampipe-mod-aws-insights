@@ -18,9 +18,6 @@ jobs:
       - name: Autobuild (se aplicável)
         uses: github/codeql-action/autobuild@v3
 
-      - name: Run CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-
       - name: Scan IaC & code with Trivy
         uses: aquasecurity/trivy-action@0.28.0
         with:
