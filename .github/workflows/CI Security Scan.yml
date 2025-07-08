@@ -1,0 +1,31 @@
+name: CI Security Scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript,python,go
+
+      - name: Autobuild (se aplicável)
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      - name: Scan IaC & code with Trivy
+        uses: aquasecurity/trivy-action@v0.28.0
+        with:
+          scan-type: fs
+          cache: true
+
+      - name: Run HCL AppScan CodeSweep
+        uses: HCL-TECH-SOFTWARE/appscan-codesweep-action@v2.1
