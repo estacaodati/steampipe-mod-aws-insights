@@ -22,7 +22,7 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
       - name: Scan IaC & code with Trivy
-        uses: aquasecurity/trivy-action@v0.28.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
           scan-type: fs
           cache: true
