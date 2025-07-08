@@ -1,0 +1,25 @@
+name: CI Security Scan
+on:
+  workflow_dispatch:
+
+jobs:
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@latest
+
+      - name: Enable SAST (CodeQL)
+        uses: github/codeql-action/init@latest
+        with:
+          languages: javascript,python,go
+      - uses: github/codeql-action/autobuild@latest
+      - uses: github/codeql-action/analyze@latest
+
+      - name: Scan IaC & code with Trivy
+        uses: aquasecurity/trivy-action@latest
+        with:
+          scan-type: fs
+          cache: true
+
+      - name: Run HCL AppScan CodeSweep
+        uses: HCL-TECH-SOFTWARE/appscan-codesweep-action@latest
